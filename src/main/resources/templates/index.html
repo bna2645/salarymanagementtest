@@ -14,8 +14,8 @@
     <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
     <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
 
-    <!-- Form -->
-    <form th:action="${employee.id != null} ? @{/update/{id}(id=${employee.id})} : @{/add}"
+    <!-- Form Add/Update -->
+    <form th:action="@{${employee.id != null} ? '/update/{id}(id=${employee.id})' : '/add'}"
           th:object="${employee}" method="post" class="mb-4">
         <div class="mb-3">
             <label class="form-label">Name</label>
@@ -31,6 +31,15 @@
         </div>
         <button type="submit" class="btn btn-primary" th:text="${employee.id != null} ? 'Update' : 'Add'"></button>
         <a th:href="@{/}" class="btn btn-secondary">Reset Form</a>
+    </form>
+
+    <!-- Search Form -->
+    <form th:action="@{/search}" method="post" class="mb-4">
+        <div class="input-group">
+            <input type="text" class="form-control" name="searchName" placeholder="Enter name to search" required>
+            <button type="submit" class="btn btn-info">Search</button>
+            <a th:href="@{/}" class="btn btn-secondary ms-2">Show All</a>
+        </div>
     </form>
 
     <!-- List of Employees -->

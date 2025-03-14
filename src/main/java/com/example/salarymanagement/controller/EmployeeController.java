@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
 @Controller
 
 public class EmployeeController {
@@ -60,6 +63,20 @@ public class EmployeeController {
         model.addAttribute("message", "User deleted successfully");
         model.addAttribute("employees", employeeService.getAllEmployees());
         model.addAttribute("employee", new Employee());
+        return "index";
+    }
+
+    @PostMapping("/search")
+    public String searchEmployee(@RequestParam("searchName") String searchName, Model model) {
+        Employee employee = employeeService.searchByName(searchName);
+        model.addAttribute("employee", new Employee()); // Reset form
+        if (employee != null) {
+            model.addAttribute("employees", List.of(employee)); // Hiển thị kết quả tìm kiếm
+            model.addAttribute("message", "Search completed");
+        } else {
+            model.addAttribute("employees", employeeService.getAllEmployees());
+            model.addAttribute("error", "No employee found with name: " + searchName);
+        }
         return "index";
     }
 }

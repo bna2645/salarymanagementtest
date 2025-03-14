@@ -43,7 +43,7 @@ public class EmployeeService {
         employeeRepository.deleteById(id);
     }
 
-    public Employee searchEmployeeByName(String name) {
+    public Employee searchByName(String name) {
         return employeeRepository.findByName(name);
     }
 }
